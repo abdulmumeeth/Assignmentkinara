@@ -1,14 +1,10 @@
 import java.io.*;
 import java.util.*;
 
-// Student class representing the student details
 class Student {
     private int id;
     private String name;
     private int totalMarks;
-
-    // Constructor, getters, and setters for Student class
-    // ...
 
     @Override
     public String toString() {
@@ -22,17 +18,15 @@ class Student {
 
 // Backend API class responsible for loading student details and implementing filtering
 class StudentGridSystem {
-    private List<Student> studentList; // Holds the loaded student data from file
-
-    // Constructor for StudentGridSystem class
+    private List<Student> studentList; 
+   
     public StudentGridSystem() {
         studentList = new ArrayList<>();
     }
 
-    // Method to load student details from a file
+    
     public void loadStudentDetails(String filePath) {
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            // Assuming CSV format: id,name,totalMarks
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
@@ -52,7 +46,6 @@ class StudentGridSystem {
         }
     }
 
-    // Method to retrieve student details in a paginated manner
     public List<Student> getPaginatedStudentDetails(int pageNumber, int pageSize) {
         int startIndex = (pageNumber - 1) * pageSize;
         int endIndex = Math.min(startIndex + pageSize, studentList.size());
@@ -64,13 +57,10 @@ class StudentGridSystem {
         return studentList.subList(startIndex, endIndex);
     }
 
-    // Method to filter student details based on the provided criteria
     public List<Student> filterStudentDetails(String filterCriteria) {
         List<Student> filteredList = new ArrayList<>();
 
-        // Implement the filtering logic based on the provided criteria
         for (Student student : studentList) {
-            // Assuming filtering based on student name
             if (student.getName().contains(filterCriteria)) {
                 filteredList.add(student);
             }
@@ -80,16 +70,12 @@ class StudentGridSystem {
     }
 }
 
-// Main class to test the program
 public class Main {
     public static void main(String[] args) {
-        // Create an instance of the StudentGridSystem
         StudentGridSystem gridSystem = new StudentGridSystem();
 
-        // Load student details from a file
         gridSystem.loadStudentDetails("path/to/student/file.csv");
 
-        // Retrieve paginated student details
         int pageNumber = 1;
         int pageSize = 10;
         List<Student> studentsPage = gridSystem.getPaginatedStudentDetails(pageNumber, pageSize);
@@ -98,7 +84,6 @@ public class Main {
             System.out.println(student);
         }
 
-        // Filter student details based on criteria
         String filterCriteria = "John";
         List<Student> filteredStudents = gridSystem.filterStudentDetails(filterCriteria);
         System.out.println("\nFiltered Students (Criteria: " + filterCriteria + "):");
@@ -106,4 +91,3 @@ public class Main {
             System.out.println(student);
         }
 
-        // Additional code for implementing the server-side APIs and integrating with the UI
